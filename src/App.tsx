@@ -28,17 +28,40 @@ interface State {
   robatGaleley: any[];
 }
 class App extends React.Component<Props, State> {
+  // 生命周期的第一个阶段，初始化
   constructor(props) {
     super(props);
     this.state = {
       robatGaleley: [],
     };
   }
+  // 在组件创建好dom元素以后，挂载进页面的时候调用
   componentDidMount(): void {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
-      .then(data=>this.setState({robatGaleley:data}));
+      .then(data=>this.setState({robatGaleley:data},()=>{
+        console.log("sada")
+      }));
   }
+  // 更新阶段，第二个阶段
+  //在组件接收一个新的prop(更新后)时被调用
+  // https://www.cnblogs.com/aoshilin/p/12856642.html
+  // componentWillReceiveProps(nextProps: Readonly<Props>, nextContext: any): void {
+    
+  // }
+  // 这是React组件的钩子函数之一，该函数会在组件重新渲染之前调用，由函数的返回的bool值决定是否重新渲染组件。
+  // shouldComponentUpdate(nextProps: Readonly<Props>, nextState: Readonly<State>, nextContext: any): boolean {
+  //   return true
+  // }
+
+  // 组件更新后调用
+  // componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
+    
+  // }
+  // 生命周期第三个阶段 销毁
+  // componentWillUnmount(): void {
+    
+  // }
   render() {
     return (
       <div className={styles.app}>
