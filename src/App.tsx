@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import logo from "./assets/images/logo.svg";
 // import "./App.css";
 // 需要写个声明文件 custom.d.ts
@@ -91,7 +91,40 @@ import ShoppingCar from "./components/ShoppingCart";
 //   robatGaleley: any[];
 // }
 const App: React.FC = (props) => {
-  const [count,setCount]=useState<number>(0)
+  const [count, setCount] = useState<number>(0);
+
+  const [robotsData, setRobotsData] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>();
+  // 当count发生变化的时候调用
+  useEffect(() => {
+    document.title = `点击第${count}次`;
+  }, [count]);
+  // useEffect第二个参数传[],相当于执行componentDidMount生命周期
+  // 使用网络请求
+  // useEffect(()=>{
+  //   fetch("https://jsonplaceholder.typicode.com/users")
+  //     .then((response) => response.json())
+  //     .then(data=>setRobotsData(data))
+  // },[])
+  // 使用async/await
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      // 处理网络请求异常
+      try {
+        let response = await fetch(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        let data = await response.json();
+        setRobotsData(data);
+      } catch (e) {
+        setError("网络请求错误");
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
   return (
     <div className={styles.app}>
       <div className={styles.appHeader}>
@@ -99,15 +132,23 @@ const App: React.FC = (props) => {
         <h1>alvin-react1S</h1>
       </div>
       <ShoppingCar />
-      <button onClick={()=>{
-        setCount(count+1)
-      }}>click</button>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        click
+      </button>
       <p>count:{count}</p>
-      <div className={styles.robotList}>
-        {robots.map((r) => (
-          <Robot key={r.id} id={r.id} email={r.email} name={r.name} />
-        ))}
-      </div>
+      {!loading ? (
+        <div className={styles.robotList}>
+          {robotsData.map((r) => (
+            <Robot key={r.id} id={r.id} email={r.email} name={r.name} />
+          ))}
+        </div>
+      ) : (
+        <h1>正在加载中。。</h1>
+      )}
     </div>
   );
 };
