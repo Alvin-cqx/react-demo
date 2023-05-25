@@ -1,16 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 // import './index.css';
 
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
+// 全局数据传递
+const defaultProvideData = {
+  username: "陈庆贤",
+};
+export const appContext = React.createContext(defaultProvideData);
 root.render(
   <React.StrictMode>
-    <App  />
+    <appContext.Provider value={defaultProvideData}>
+      <App />
+    </appContext.Provider>
   </React.StrictMode>
 );
 

@@ -84,13 +84,13 @@ import ShoppingCar from "./components/ShoppingCart";
 // }
 
 // 方法3  hooks useState使用
-// interface Props {
-
-// }
+interface Props {
+  // usernameData?:string
+}
 // interface State {
 //   robatGaleley: any[];
 // }
-const App: React.FC = (props) => {
+const App: React.FC<Props> = () => {
   const [count, setCount] = useState<number>(0);
 
   const [robotsData, setRobotsData] = useState<any>([]);
