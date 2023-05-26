@@ -96,6 +96,7 @@ const App: React.FC<Props> = () => {
   const [robotsData, setRobotsData] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>();
+  // console.log(error)
   // 当count发生变化的时候调用
   useEffect(() => {
     document.title = `点击第${count}次`;
