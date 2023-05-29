@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./ShoppingCart.module.css";
+import { appContext } from "../AppState";
 interface Props {}
 interface State {
   isOpen: boolean;
@@ -19,26 +20,33 @@ class ShoppingCar extends React.Component<Props, State> {
   };
   render() {
     return (
-      <div className={styles.cartContainer}>
-        <button
-          className={styles.button}
-          onClick={this.clickShopCart}
-          // onClick={() => {
-          //   this.setState({ isOpen: !this.state.isOpen });
-          // }}
-        >
-         <span> 购物车(2)</span>
-        </button>
-        <div
-          className={styles.cartDropDown}
-          style={{ display: this.state.isOpen ? "block" : "none" }}
-        >
-          <ul>
-            <li>机器人1</li>
-            <li>机器人2</li>
-          </ul>
-        </div>
-      </div>
+      <appContext.Consumer>
+        {(value) => {
+          return (
+            <div className={styles.cartContainer}>
+              <button
+                className={styles.button}
+                onClick={this.clickShopCart}
+                // onClick={() => {
+                //   this.setState({ isOpen: !this.state.isOpen });
+                // }}
+              >
+                <span> 购物车({value.shoppingCart.items.length})</span> 
+              </button>
+              <div
+                className={styles.cartDropDown}
+                style={{ display: this.state.isOpen ? "block" : "none" }}
+              >
+                <ul>
+                  {value.shoppingCart.items.map((i) => (
+                    <li  key={i.id}>{i.name}</li>
+                    ))}
+                </ul>
+              </div>
+            </div>
+          );
+        }}
+      </appContext.Consumer>
     );
   }
 }

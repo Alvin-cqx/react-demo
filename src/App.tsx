@@ -5,6 +5,7 @@ import logo from "./assets/images/logo.svg";
 import styles from "./App.module.css";
 import robots from "./mockdata/robots.json";
 import Robot from "./components/Robot";
+import RobotDis from "./components/RobotDis";
 import ShoppingCar from "./components/ShoppingCart";
 // 方法1
 // function App() {
@@ -143,9 +144,13 @@ const App: React.FC<Props> = () => {
       <p>count:{count}</p>
       {!loading ? (
         <div className={styles.robotList}>
-          {robotsData.map((r) => (
-            <Robot key={r.id} id={r.id} email={r.email} name={r.name} />
-          ))}
+          {robotsData.map((r, index) =>
+            index % 2 === 0 ? (
+              <Robot key={r.id} id={r.id} email={r.email} name={r.name} />
+            ) : (
+              <RobotDis key={r.id} id={r.id} email={r.email} name={r.name}   />
+            )
+          )}
         </div>
       ) : (
         <h1>正在加载中。。</h1>

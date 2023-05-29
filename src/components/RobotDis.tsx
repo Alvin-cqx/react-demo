@@ -13,18 +13,15 @@ import styles from "./Robot.module.css";
 //   );
 // };
 import { appContext ,setStateContext} from "../AppState";
-
 import {withAddToCart} from './AddToCart'
-export interface RobotProps {
+interface RobotProps {
   id: number;
   name: string;
   email: string;
   addToCart:(id,name)=>void,
-
 }
-const Robot: React.FC<RobotProps> = ({ id, name, email,addToCart }) => {
+const RobotDis: React.FC<RobotProps> = ({ id, name, email ,addToCart}) => {
   const value = useContext(appContext);
-  // 抽取出去当高阶组件 AddToCart.tsx
   // const setState=useContext(setStateContext)
   // const addToCart=()=>{
   //   if(setState){
@@ -41,6 +38,7 @@ const Robot: React.FC<RobotProps> = ({ id, name, email,addToCart }) => {
   return (
     <div className={styles.cardContainer}>
       <img src={`https://robohash.org/${id}`} alt="" />
+      <h2>打折商品</h2>
       <h2>{name}</h2>
       <p>{email}</p>
       <h3>作者:{value.username}</h3>
@@ -48,5 +46,5 @@ const Robot: React.FC<RobotProps> = ({ id, name, email,addToCart }) => {
     </div>
   );
 };
+export default  withAddToCart(RobotDis);
 
-export default  withAddToCart(Robot);
