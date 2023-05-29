@@ -13,15 +13,16 @@ import styles from "./Robot.module.css";
 //   );
 // };
 import { appContext ,setStateContext} from "../AppState";
-import {withAddToCart} from './AddToCart'
+import {useAddToCart} from './AddToCart'
 interface RobotProps {
   id: number;
   name: string;
   email: string;
-  addToCart:(id,name)=>void,
+ 
 }
-const RobotDis: React.FC<RobotProps> = ({ id, name, email ,addToCart}) => {
+const RobotDis: React.FC<RobotProps> = ({ id, name, email }) => {
   const value = useContext(appContext);
+  const addToCart=useAddToCart()
   // const setState=useContext(setStateContext)
   // const addToCart=()=>{
   //   if(setState){
@@ -46,5 +47,5 @@ const RobotDis: React.FC<RobotProps> = ({ id, name, email ,addToCart}) => {
     </div>
   );
 };
-export default  withAddToCart(RobotDis);
+export default  RobotDis;
 
